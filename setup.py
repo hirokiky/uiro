@@ -33,4 +33,7 @@ setup(name='uiro',
           'mako==0.9',
           'matcha==0.3',
       ],
+      tests_require=[
+          'pytest',
+      ]
       )
