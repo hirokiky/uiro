@@ -26,14 +26,17 @@ def test_generate_static_matching(target):
     assert isinstance(actual_app, DummyDirectoryServeApp)
     assert actual_app.directory == './dev/blog/statics'
     assert matched_dict == {'path': ['image', 'logo.png']}
-    assert actual.reverse('static:blog', path=['image', 'logo.png']) == '/static/blog/image/logo.png'
+    assert actual.reverse(
+        'static:blog',
+        path=['image', 'logo.png']
+    ) == '/static/blog/image/logo.png'
 
 
 def test_generate_static_matching_directiory_not_found(target):
-    def failing_directory_serve_app(directory, **kwargs):
+    def os_error_app(directory, **kwargs):
         raise OSError
 
     dummy_app = DummyApp('./dev/blog/kadoom', 'blog')
-    actual = target.generate_static_matching(dummy_app, failing_directory_serve_app)
+    actual = target.generate_static_matching(dummy_app, os_error_app)
 
     assert actual is None

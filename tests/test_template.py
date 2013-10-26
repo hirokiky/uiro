@@ -28,7 +28,8 @@ class DummyLookup(object):
 
 
 def test_setup_lookups(target):
-    target.setup_lookup([DummyApp('./dev/blog/__init__.py', 'blog')], DummyLookup)
+    target.setup_lookup([DummyApp('./dev/blog/__init__.py', 'blog')],
+                        lookup_class=DummyLookup)
 
     assert len(target._lookups) == 1
     assert target._lookups['blog'].directories == ['./dev/blog/templates']
