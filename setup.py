@@ -37,5 +37,11 @@ setup(name='uiro',
       ],
       tests_require=[
           'pytest',
-      ]
+      ],
+      entry_points={
+          'gearbox.commands': [
+              'initdb=uiro.commands.initdb:InitDBCommand',
+              'shell=uiro.commands.shell:ShellCommand',
+          ]
+      }
       )
