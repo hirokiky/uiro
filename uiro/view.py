@@ -15,7 +15,7 @@ def view_config(
         def _wrapped(*args, **kwargs):
             return reduce(
                 lambda a, b: b(a),
-                [view_callable] + wrappers
+                reversed(wrappers + [view_callable])
             )(*args, **kwargs)
         view_callable._wrapped = _wrapped
         return view_callable
