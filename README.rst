@@ -7,11 +7,11 @@ le Web framework.
 Uiro provides a foundation to create a pluggable Web application.
 it suggest to use these packages to create third party apps (on uiro 0.1):
 
-* webob==1.2
+* webob==1.2.3
 * gearbox==0.0.2
 * matcha==0.3
-* mako==0.9
-* SQLAlchemy==0.8
+* mako==0.9.0
+* SQLAlchemy==0.8.2
 * repoze.who==2.2
 * beaker==1.6
 

@@ -28,10 +28,11 @@ setup(name='uiro',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'webob==1.2',
+          'webob==1.2.3',
           'gearbox==0.0.2',
-          'mako==0.9',
+          'mako==0.9.0',
           'matcha==0.3',
+          'SQLAlchemy==0.8.2',
           'zope.sqlalchemy==0.7.3',
       ],
       tests_require=[
