@@ -32,6 +32,7 @@ setup(name='uiro',
           'gearbox==0.0.2',
           'mako==0.9',
           'matcha==0.3',
+          'zope.sqlalchemy==0.7.3',
       ],
       tests_require=[
           'pytest',
