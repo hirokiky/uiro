@@ -2,9 +2,15 @@ from importlib import import_module
 
 from matcha import make_wsgi_app
 
+from uiro.template import setup_lookup
+
 
 def main(global_conf, root, **settings):
     matching = import_module_attribute(settings['uiro.root_matching'])
+    apps = [import_module(app_name)
+            for app_name in settings['uiro.installed_apps'].split('\n')
+            if app_name != '']
+    setup_lookup(apps)
     return make_wsgi_app(matching)
 
 

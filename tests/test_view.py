@@ -11,19 +11,17 @@ class TestViewConfig(object):
         from uiro.view import view_config
         return view_config
 
-    def makeone(self, method, view_callable):
-        return self.target()(method=method)(view_callable)
+    def makeone(self, view_callable):
+        return self.target()(
+            base_wrappers_getter=lambda *args: [],
+        )(view_callable)
 
     def test_wrapping(self):
-        from uiro.view import ViewNotMatched
-
         def view_callable(request):
             return request
-        target = self.makeone('get', view_callable)
+        target = self.makeone(view_callable)
 
         assert target('request') == 'request'
-        with pytest.raises(ViewNotMatched):
-            target._wrapped(create_dummy_request('post'))
 
 
 class TestPreserveView(object):
@@ -56,3 +54,29 @@ class TestMethodPredicate(object):
     @pytest.mark.parametrize('method', ['get', 'GET'])
     def test_matched(self, target, request, method):
         assert target(method)(request)
+
+
+class DummyTemplate(object):
+    def __init__(self, temlate_name):
+        self.template_name = temlate_name
+
+    def render(self, res):
+        res['template_name'] = self.template_name
+        return res
+
+
+class TestRendertemplate(object):
+    @pytest.fixture
+    def target(self):
+        from uiro.view import render_template
+        return render_template
+
+    def test_returned_dict(self, target):
+        wrapped = target(
+            'blog:home.mako', DummyTemplate
+        )(lambda r: {'request': r})
+
+        actual = wrapped('request')
+
+        assert actual['request'] == 'request'
+        assert actual['template_name'] == 'blog:home.mako'
