@@ -17,4 +17,3 @@ class ShellCommand(LoadAppCommand):
             banner += '\n\n' + help + '\n'
             interact(banner, local=env)
         return shell
-

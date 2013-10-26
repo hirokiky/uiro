@@ -24,4 +24,3 @@ class LoadAppCommand(Command):
         app_name = parsed_args.app_name
         base = os.getcwd()
         return loadapp(app_spec, name=app_name, relative_to=base)
-

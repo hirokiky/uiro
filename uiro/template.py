@@ -10,7 +10,8 @@ def setup_lookup(apps, lookup_class=TemplateLookup):
 
     _lookups = {}
     for app in apps:
-        app_template_dir = os.path.join(os.path.dirname(app.__file__), 'templates')
+        app_template_dir = os.path.join(os.path.dirname(app.__file__),
+                                        'templates')
         app_lookup = lookup_class(directories=[app_template_dir],
                                   output_encoding='utf-8',
                                   encoding_errors='replace')
