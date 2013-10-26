@@ -60,7 +60,7 @@ class DummyTemplate(object):
     def __init__(self, temlate_name):
         self.template_name = temlate_name
 
-    def render(self, res):
+    def render(self, **res):
         res['template_name'] = self.template_name
         return res
 

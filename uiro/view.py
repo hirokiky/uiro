@@ -61,7 +61,7 @@ def render_template(template_name, template_getter=get_app_template):
         def _wraped(request, *args, **kwargs):
             res = func(request, *args, **kwargs)
             if isinstance(res, dict):
-                return template.render(res)
+                return template.render(**res)
             else:
                 return res
         return _wraped
