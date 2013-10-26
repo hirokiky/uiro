@@ -17,11 +17,11 @@ class TestViewConfig(object):
         )(view_callable)
 
     def test_wrapping(self):
-        def view_callable(request):
+        def view_callable(self, request):
             return request
         target = self.makeone(view_callable)
 
-        assert target('request') == 'request'
+        assert target('self', 'request') == 'request'
 
 
 class TestPreserveView(object):
@@ -31,16 +31,16 @@ class TestPreserveView(object):
         return preserve_view
 
     def test_matched(self, target):
-        actual = target(lambda r: True, lambda r: True)(lambda r: r)
+        actual = target(lambda r: True, lambda r: True)(lambda s, r: r)
 
-        assert actual('request') == 'request'
+        assert actual('self', 'request') == 'request'
 
     def test_not_matched(self, target):
         from uiro.view import ViewNotMatched
-        actual = target(lambda r: False, lambda r: True)(lambda r: r)
+        actual = target(lambda r: False, lambda r: True)(lambda s, r: r)
 
         with pytest.raises(ViewNotMatched):
-            actual('request')
+            actual('self', 'request')
 
 
 class TestMethodPredicate(object):
@@ -74,9 +74,9 @@ class TestRendertemplate(object):
     def test_returned_dict(self, target):
         wrapped = target(
             'blog:home.mako', DummyTemplate
-        )(lambda r: {'request': r})
+        )(lambda s, r: {'request': r})
 
-        actual = wrapped('request')
+        actual = wrapped('self', 'request')
 
         assert actual['request'] == 'request'
         assert actual['template_name'] == 'blog:home.mako'

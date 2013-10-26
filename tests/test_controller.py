@@ -7,13 +7,6 @@ def target_class():
     return BaseController
 
 
-def create_dummy_view(wrapped):
-    def view(request):
-        return 'kadoom'
-    view._wrapped = wrapped
-    return view
-
-
 def test_init(target_class):
     class Controller(target_class):
         def ritsu_view(self):
@@ -32,19 +25,34 @@ def test_init(target_class):
 
 
 def test_call(target_class):
-    target = target_class()
-    target.views = [create_dummy_view(lambda x: x)]
+    def mio_decorator(func):
+        def wraped(*args, **kwargs):
+            return func(*args, **kwargs) + ' x mio'
+        func._wrapped = wraped
+        return func
 
-    assert target('request') == 'request'
+    class Controller(target_class):
+        @mio_decorator
+        def ritsu_view(self, request):
+            return request + ' ritsu'
+
+    target = Controller()
+
+    assert target('tainaka') == 'tainaka ritsu x mio'
 
 
 def test_call_not_found(target_class):
     from uiro.view import ViewNotMatched
-    target = target_class()
 
-    def not_matched_wrapped(request):
+    def not_matched_wrapped(self, request):
         raise ViewNotMatched
-    target.views = [create_dummy_view(not_matched_wrapped)]
+
+    def view_callable(request):
+        return request
+
+    target = target_class()
+    view_callable._wrapped = not_matched_wrapped
+    target.views = [view_callable]
 
     actual = target('request')
 

@@ -16,7 +16,7 @@ class BaseController(object):
     def __call__(self, request):
         for view in self.views:
             try:
-                return view._wrapped(request)
+                return view._wrapped(self, request)
             except ViewNotMatched:
                 continue
         else:

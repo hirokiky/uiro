@@ -37,9 +37,9 @@ def view_config(
 
 def preserve_view(*predicates):
     def wrapper(view_callable):
-        def _wrapped(request, *args, **kwargs):
+        def _wrapped(self, request, *args, **kwargs):
             if all([predicate(request) for predicate in predicates]):
-                return view_callable(request, *args, **kwargs)
+                return view_callable(self, request, *args, **kwargs)
             else:
                 raise ViewNotMatched
         return _wrapped
@@ -58,8 +58,8 @@ def render_template(template_name, template_getter=get_app_template):
     def wrapper(func):
         template = template_getter(template_name)
 
-        def _wraped(request, *args, **kwargs):
-            res = func(request, *args, **kwargs)
+        def _wraped(self, request, *args, **kwargs):
+            res = func(self, request, *args, **kwargs)
             if isinstance(res, dict):
                 return template.render(**res)
             else:
