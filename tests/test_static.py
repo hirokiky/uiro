@@ -24,7 +24,7 @@ def test_generate_static_matching(target):
 
     actual_app, matched_dict = actual['/static/blog/image/logo.png']
     assert isinstance(actual_app, DummyDirectoryServeApp)
-    assert actual_app.directory == './dev/blog/statics'
+    assert actual_app.directory == './dev/blog/static'
     assert matched_dict == {'path': ['image', 'logo.png']}
     assert actual.reverse(
         'blog:static',

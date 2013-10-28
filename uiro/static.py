@@ -10,24 +10,24 @@ def generate_static_matching(app,
     """ Creating a matching for WSGI application to serve static files
     for passed app.
 
-    Static files will be collected from directory named 'statics'
+    Static files will be collected from directory named 'static'
     under passed application::
 
-        ./blog/statics/
+        ./blog/static/
 
     This example is with an application named `blog`.
-    URLs for static files in statics directory will begin with
+    URLs for static files in static directory will begin with
     /static/app_name/. so in blog app case, if the directory has
     css/main.css file, the file will be published like this::
 
-         yoursite.com/statics/blog/css/main.css
+         yoursite.com/static/blog/css/main.css
 
     And you can get this URL by reversing form matching object::
 
         matching.reverse('blog:static', path=['css', 'main.css'])
     """
     static_dir = os.path.join(os.path.dirname(app.__file__),
-                              'statics')
+                              'static')
     try:
         static_app = directory_serve_app(static_dir, index_page='')
     except OSError:
