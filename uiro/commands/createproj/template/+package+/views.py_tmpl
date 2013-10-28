@@ -1,0 +1,23 @@
+import transaction
+from webob import Response
+from uiro.controller import BaseController
+from uiro.db import Session
+from uiro.view import view_config
+
+from .models import MyModel
+
+
+class TopController(BaseController):
+    @view_config(method='get',
+                 template_name='{{package}}:top.mako')
+    def get_view(self, request):
+        mymodels = MyModel.query.all()
+        return dict(request=request,
+                    mymodels=mymodels)
+
+    @view_config(method='post')
+    def post_view(self, request):
+        with transaction.manager:
+            Session.add(MyModel(name='spam'))
+        return Response(status_code=302,
+                        location=request.matching.reverse('top'))

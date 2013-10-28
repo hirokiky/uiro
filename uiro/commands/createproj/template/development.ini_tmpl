@@ -1,0 +1,11 @@
+[app:main]
+use = egg:{{package}}
+root = %(here)s
+uiro.root_matching = {{package}}.matching:matching
+uiro.installed_apps = {{package}}
+sqlalchemy.url = sqlite:///default.db
+
+[server:main]
+use = egg:gearbox#wsgiref
+host = 0.0.0.0
+port = 8888

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link href="${request.matching.reverse('{{package}}:static', path=['uiro.css'])}" rel="stylesheet" />
+    <title>{{package}}</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="header">{{package}} works!</h1>
+    <div class="spam">
+        <form method="post" action="">
+            <input type="submit" value="Say spam">
+        </form>
+        <ul>
+            % for mymodel in mymodels:
+                <li>${mymodel.name}</li>
+            % endfor
+        </ul>
+    </div>
+    <footer>
+        <p class="lead">powerd by <a href="https://github.com/hirokiky/uiro">Uiro Webframework</a></p>
+    </footer>
+</div>
+</body>
+</html>
