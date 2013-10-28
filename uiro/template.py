@@ -6,6 +6,13 @@ _lookups = None
 
 
 def setup_lookup(apps, lookup_class=TemplateLookup):
+    """ Registering template directories of apps to Lookup.
+
+    Lookups will be set up as dictionary, app name
+    as key and lookup for this app will be it's value.
+    Each lookups is correspond to each template directories of apps._lookups.
+    The directory should be named 'templates', and put under app directory.
+    """
     global _lookups
 
     _lookups = {}
@@ -19,13 +26,24 @@ def setup_lookup(apps, lookup_class=TemplateLookup):
 
 
 def get_lookups():
+    """ Returning the lookups
+
+    The global variable _lookups should not be imported directory
+    by another modules. By importing directory, the value will not
+    change evenif setup_lookup
+    """
     return _lookups
 
 
 def get_app_template(name):
-    """
-    get_app_template('blog:base.mako')
-    returns a base template for blog application.
+    """ Getter function of templates for each applications.
+
+    Argument `name` will be interpreted as colon separated, the left value
+    means application name, right value means a template name.
+
+        get_app_template('blog:dashboarb.mako')
+
+    It will return a template for dashboard page of `blog` application.
     """
     app_name, template_name = name.split(':')
     return get_lookups()[app_name].get_template(template_name)

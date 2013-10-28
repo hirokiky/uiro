@@ -5,6 +5,14 @@ from gearbox.command import Command
 
 
 class LoadAppCommand(Command):
+    """ Base class for creating uiro commands.
+
+    You can override this class and call `loadadd` method to get
+    WSGI application built by paste.app_factory.
+    While building the application, almost necessary setup will be done
+    (for example setup databases, template lookups and so on), so then
+    you can run some application-dependent scripts
+    """
     def get_parser(self, prog_name):
         parser = super(LoadAppCommand, self).get_parser(prog_name)
         parser.add_argument(

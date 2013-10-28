@@ -11,5 +11,7 @@ Session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 
 
 def initdb(config):
+    """ Initializing database settings by using config from .ini file.
+    """
     engine = sa.engine_from_config(config, 'sqlalchemy.')
     Session.configure(bind=engine)

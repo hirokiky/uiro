@@ -5,6 +5,8 @@ from uiro.commands import LoadAppCommand
 
 
 class ShellCommand(LoadAppCommand):
+    """ Running python shell after building up an uiro application.
+    """
     def take_action(self, parsed_args):
         app = self.loadapp(parsed_args)
         shell = self.make_default_shell()

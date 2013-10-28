@@ -5,10 +5,14 @@ from uiro.template import get_app_template
 
 class ViewNotMatched(Exception):
     """ Called view was not apposite.
+    This exception is to notify Controllers that called view was not apposite
+    to the applied rquest.
     """
 
 
 def get_base_wrappers(method='get', template_name=''):
+    """ basic View Wrappers used by view_config.
+    """
     wrappers = [preserve_view(MethodPredicate(method))]
 
     if template_name:
@@ -22,6 +26,12 @@ def view_config(
         template_name='',
         base_wrappers_getter=get_base_wrappers
 ):
+    """ Creating Views applied some configurations
+    and store it to _wrapped attribute on each Views.
+    * _wrapped expects to be called by Controller
+      (subclasses of uiro.controller.BaseController)
+    * The original view will not be affected by this decorator.
+    """
     wrappers = base_wrappers_getter(method, template_name)
 
     def wrapper(view_callable):
@@ -36,6 +46,18 @@ def view_config(
 
 
 def preserve_view(*predicates):
+    """ Raising ViewNotMatched when applied request was not apposite.
+
+    preserve_view calls all Predicates and when return values of them was
+    all True it will call a wrapped view.
+    It raises ViewNotMatched if this is not the case.
+
+    Predicates
+    ==========
+    This decorator takes Predicates one or more, Predicate is callable
+    to return True or False in response to inputted request.
+    If the request was apposite it should return True.
+    """
     def wrapper(view_callable):
         def _wrapped(self, request, *args, **kwargs):
             if all([predicate(request) for predicate in predicates]):
@@ -47,6 +69,11 @@ def preserve_view(*predicates):
 
 
 class MethodPredicate(object):
+    """ Predicate class to checking Method of request object.
+
+    MethodPredicate is preserve views when the request method was not same with
+    applied in instantiate.
+    """
     def __init__(self, method):
         self.method = method
 
@@ -55,6 +82,13 @@ class MethodPredicate(object):
 
 
 def render_template(template_name, template_getter=get_app_template):
+    """ Decorator to specify which template to use for Wrapped Views.
+
+    It will return string rendered by specified template and
+    returned dictionary from wrapped views as a context for template.
+    The returned value was not dictionary, it does nothing,
+    just returns the result.
+    """
     def wrapper(func):
         template = template_getter(template_name)
 

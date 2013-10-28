@@ -7,6 +7,25 @@ from webob.static import DirectoryApp
 
 def generate_static_matching(app,
                              directory_serve_app=DirectoryApp):
+    """ Creating a matching for WSGI application to serve static files
+    for passed app.
+
+    Static files will be collected from directory named 'statics'
+    under passed application::
+
+        ./blog/statics/
+
+    This example is with an application named `blog`.
+    URLs for static files in statics directory will begin with
+    /static/app_name/. so in blog app case, if the directory has
+    css/main.css file, the file will be published like this::
+
+         yoursite.com/statics/blog/css/main.css
+
+    And you can get this URL by reversing form matching object::
+
+        matching.reverse('static:blog', path=['css', 'main.css'])
+    """
     static_dir = os.path.join(os.path.dirname(app.__file__),
                               'statics')
     try:
@@ -19,6 +38,9 @@ def generate_static_matching(app,
 
 
 def get_static_app_matching(apps):
+    """ Returning a matching containing applications to serve static files
+    correspond to each passed applications.
+    """
     return reduce(lambda a, b: a + b,
                   [generate_static_matching(app)
                    for app in apps if app is not None])
