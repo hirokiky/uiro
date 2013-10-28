@@ -24,7 +24,7 @@ def generate_static_matching(app,
 
     And you can get this URL by reversing form matching object::
 
-        matching.reverse('static:blog', path=['css', 'main.css'])
+        matching.reverse('blog:static', path=['css', 'main.css'])
     """
     static_dir = os.path.join(os.path.dirname(app.__file__),
                               'statics')
@@ -33,7 +33,7 @@ def generate_static_matching(app,
     except OSError:
         return None
     static_pattern = '/static/{app.__name__}/*path'.format(app=app)
-    static_name = 'static:{app.__name__}'.format(app=app)
+    static_name = '{app.__name__}:static'.format(app=app)
     return Matching(static_pattern, static_app, static_name)
 
 

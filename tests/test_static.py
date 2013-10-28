@@ -27,7 +27,7 @@ def test_generate_static_matching(target):
     assert actual_app.directory == './dev/blog/statics'
     assert matched_dict == {'path': ['image', 'logo.png']}
     assert actual.reverse(
-        'static:blog',
+        'blog:static',
         path=['image', 'logo.png']
     ) == '/static/blog/image/logo.png'
 
