@@ -42,7 +42,7 @@ setup(name='uiro',
           'gearbox.commands': [
               'initdb=uiro.commands.initdb:InitDBCommand',
               'shell=uiro.commands.shell:ShellCommand',
-              'createproj=uiro.commands.createproj:CreateProjectCommand',
+              'create=uiro.commands.create:CreateCommand',
           ]
       }
       )
