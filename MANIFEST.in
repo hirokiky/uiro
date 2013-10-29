@@ -1,2 +1,3 @@
 global-exclude *.pyc
 include CHANGES.txt
+recursive-include uiro/commands/*/template *
