@@ -22,9 +22,9 @@ be free by version collisions.
 
 Installing
 ------------
-Create your python env and install it from Github::
+Create your python env and install it from PyPI::
 
-    pip install git+https://github.com/hirokiky/uiro
+    pip install uiro
 
 First project
 ----------------
@@ -60,3 +60,4 @@ to confirm automatically created package is running.
 Resources
 =========
 * `Repository <https://github.com/hirokiky/uiro/>`_
+* `PyPI <http://pypi.python.org/pypi/uiro/>`_

@@ -1,8 +1,8 @@
 Changes
 =========
 
-0.1 (not available)
---------------------
+0.1
+---
 
 Initial release.
 
