@@ -1,7 +1,23 @@
 Changes
 =========
 
-0.1
-----
+0.1 (not available)
+--------------------
 
 Initial release.
+
+* Basic request/response handling
+
+  * Controller/View
+  * Configuation by view_config decorator
+  * Creating WSGI application by matcha's matching object.
+
+* Basic support for using mako template.
+* Basic support for SQLAlchemy.
+* Necessary commands
+
+  * create: Starting for project using scaffolding.
+  * initdb: Creating tables to databases.
+  * serve: Running your application.
+
+* Automatically creating of apps publishing static files.
