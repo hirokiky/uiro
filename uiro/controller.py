@@ -20,14 +20,16 @@ class BaseController(object):
     with uiro.view.view_config to apply configation to each views,
     such as witch views will be call or witch template to use.
 
-    class DashboardController(BaseController):
-        @view_config(method='get')
-        def get_view(self, request):
-            return "Hello guys"
+    .. code-block:: python
 
-        @view_config(method='post')
-        def post_view(self, request):
-            return "Posted something"
+       class DashboardController(BaseController):
+           @view_config(method='get')
+           def get_view(self, request):
+               return "Hello guys"
+
+           @view_config(method='post')
+           def post_view(self, request):
+               return "Posted something"
 
     Check the behavior of view_config for more detail.
     """

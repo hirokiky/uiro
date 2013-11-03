@@ -1,3 +1,4 @@
 global-exclude *.pyc
 include CHANGES.txt
+include *.rst *.in *.ini *.txt
 recursive-include uiro/commands/*/template *

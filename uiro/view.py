@@ -28,6 +28,7 @@ def view_config(
 ):
     """ Creating Views applied some configurations
     and store it to _wrapped attribute on each Views.
+
     * _wrapped expects to be called by Controller
       (subclasses of uiro.controller.BaseController)
     * The original view will not be affected by this decorator.
@@ -52,8 +53,7 @@ def preserve_view(*predicates):
     all True it will call a wrapped view.
     It raises ViewNotMatched if this is not the case.
 
-    Predicates
-    ==========
+    Predicates:
     This decorator takes Predicates one or more, Predicate is callable
     to return True or False in response to inputted request.
     If the request was apposite it should return True.

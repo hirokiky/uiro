@@ -8,6 +8,18 @@ from uiro.template import setup_lookup
 
 
 def main(global_conf, root, **settings):
+    """ Entry point to create Uiro application.
+
+    Setup all of necessary things:
+
+      * Getting root matching
+      * Initializing DB connection
+      * Initializing Template Lookups
+      * Collecting installed applications
+      * Creating apps for serving static files
+
+    and will create/return Uiro application.
+    """
     matching = import_module_attribute(settings['uiro.root_matching'])
     apps = [import_module(app_name)
             for app_name in settings['uiro.installed_apps'].split('\n')
