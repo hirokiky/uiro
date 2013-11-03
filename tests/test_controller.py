@@ -9,8 +9,13 @@ def target_class():
 
 def test_init(target_class):
     class Controller(target_class):
+        def yui_view(self):
+            return 'yui'
+        yui_view._order = 1
+
         def ritsu_view(self):
             return 'ritsu'
+        ritsu_view._order = 0
 
         def get_mio(self):
             return 'mio'
@@ -20,8 +25,9 @@ def test_init(target_class):
 
     actual = Controller()
 
-    assert len(actual.views) == 1
-    assert actual.views[0]() == 'ritsu'
+    assert len(actual.views) == 2
+    assert actual.views[0].__name__ == 'ritsu_view'
+    assert actual.views[1].__name__ == 'yui_view'
 
 
 def test_call(target_class):
@@ -29,6 +35,7 @@ def test_call(target_class):
         def wraped(*args, **kwargs):
             return func(*args, **kwargs) + ' x mio'
         func._wrapped = wraped
+        func._order = 0
         return func
 
     class Controller(target_class):
@@ -52,6 +59,7 @@ def test_call_not_found(target_class):
 
     target = target_class()
     view_callable._wrapped = not_matched_wrapped
+    view_callable._order = 0
     target.views = [view_callable]
 
     actual = target('request')

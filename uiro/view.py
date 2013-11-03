@@ -1,3 +1,4 @@
+import itertools
 from functools import reduce
 
 from uiro.template import get_app_template
@@ -21,6 +22,9 @@ def get_base_wrappers(method='get', template_name=''):
     return wrappers
 
 
+_counter = itertools.count()
+
+
 def view_config(
         method='get',
         template_name='',
@@ -42,6 +46,7 @@ def view_config(
                 reversed(wrappers + [view_callable])
             )(*args, **kwargs)
         view_callable._wrapped = _wrapped
+        view_callable._order = next(_counter)
         return view_callable
     return wrapper
 

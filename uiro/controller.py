@@ -5,7 +5,18 @@ from uiro.request import Request
 from uiro.view import ViewNotMatched
 
 
-class BaseController(object):
+class ControllerMetaClass(type):
+    def __new__(cls, name, bases, attrs):
+        super_new = super(ControllerMetaClass, cls).__new__
+        new_class = super_new(cls, name, bases, attrs)
+
+        new_class.views = [value for name, value in attrs.items()
+                           if not name.startswith('_') and name.endswith('_view')]
+        new_class.views.sort(key=lambda x: x._order)
+        return new_class
+
+
+class BaseController(metaclass=ControllerMetaClass):
     """ Base WSGI application class to handle Views.
 
     Controllers try to call methods containing '_view' suffix on it's name.
@@ -33,11 +44,7 @@ class BaseController(object):
 
     Check the behavior of view_config for more detail.
     """
-    def __init__(self):
-        self.views = []
-        for attr_names in dir(self):
-            if not attr_names.startswith('_') and attr_names.endswith('_view'):
-                self.views.append(getattr(self, attr_names))
+    views = []
 
     @wsgify(RequestClass=Request)
     def __call__(self, request):
