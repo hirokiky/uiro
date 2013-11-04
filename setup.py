@@ -47,6 +47,7 @@ setup(name='uiro',
       ],
       tests_require=[
           'pytest',
+          'WebTest',
       ],
       entry_points={
           'gearbox.commands': [
