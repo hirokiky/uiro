@@ -11,13 +11,13 @@ class ViewNotMatched(Exception):
     """
 
 
-def get_base_wrappers(method='get', template_name=''):
+def get_base_wrappers(method='get', template_name='', predicates=(), wrappers=()):
     """ basic View Wrappers used by view_config.
     """
-    wrappers = [preserve_view(MethodPredicate(method))]
+    wrappers += (preserve_view(MethodPredicate(method), *predicates),)
 
     if template_name:
-        wrappers.append(render_template(template_name))
+        wrappers += (render_template(template_name),)
 
     return wrappers
 
@@ -28,7 +28,9 @@ _counter = itertools.count()
 def view_config(
         method='get',
         template_name='',
-        base_wrappers_getter=get_base_wrappers
+        predicates=(),
+        wrappers=(),
+        base_wrappers_getter=get_base_wrappers,
 ):
     """ Creating Views applied some configurations
     and store it to _wrapped attribute on each Views.
@@ -37,13 +39,13 @@ def view_config(
       (subclasses of uiro.controller.BaseController)
     * The original view will not be affected by this decorator.
     """
-    wrappers = base_wrappers_getter(method, template_name)
+    wrappers = base_wrappers_getter(method, template_name, predicates, wrappers)
 
     def wrapper(view_callable):
         def _wrapped(*args, **kwargs):
             return reduce(
                 lambda a, b: b(a),
-                reversed(wrappers + [view_callable])
+                reversed(wrappers + (view_callable,))
             )(*args, **kwargs)
         view_callable._wrapped = _wrapped
         view_callable._order = next(_counter)
