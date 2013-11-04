@@ -66,9 +66,9 @@ def preserve_view(*predicates):
     If the request was apposite it should return True.
     """
     def wrapper(view_callable):
-        def _wrapped(self, request, *args, **kwargs):
-            if all([predicate(request) for predicate in predicates]):
-                return view_callable(self, request, *args, **kwargs)
+        def _wrapped(self, request, context, *args, **kwargs):
+            if all([predicate(request, context) for predicate in predicates]):
+                return view_callable(self, request, context, *args, **kwargs)
             else:
                 raise ViewNotMatched
         return _wrapped
@@ -84,7 +84,7 @@ class MethodPredicate(object):
     def __init__(self, method):
         self.method = method
 
-    def __call__(self, request):
+    def __call__(self, request, context):
         return request.method.lower() == self.method.lower()
 
 
@@ -99,8 +99,8 @@ def render_template(template_name, template_getter=get_app_template):
     def wrapper(func):
         template = template_getter(template_name)
 
-        def _wraped(self, request, *args, **kwargs):
-            res = func(self, request, *args, **kwargs)
+        def _wraped(self, request, context, *args, **kwargs):
+            res = func(self, request, context, *args, **kwargs)
             if isinstance(res, dict):
                 return template.render(**res)
             else:

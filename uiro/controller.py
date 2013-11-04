@@ -5,6 +5,11 @@ from uiro.request import Request
 from uiro.view import ViewNotMatched
 
 
+class NotFound(Exception):
+    """ Error for notifying the resource was not found.
+    """
+
+
 class ControllerMetaClass(type):
     def __new__(cls, name, bases, attrs):
         super_new = super(ControllerMetaClass, cls).__new__
@@ -45,12 +50,18 @@ class BaseController(metaclass=ControllerMetaClass):
     Check the behavior of view_config for more detail.
     """
     views = []
+    resource = (lambda s, x: x)
 
     @wsgify(RequestClass=Request)
     def __call__(self, request):
+        try:
+            context = self.resource(request)
+        except NotFound:
+            raise Response(status_code=404)
+
         for view in self.views:
             try:
-                return view._wrapped(self, request)
+                return view._wrapped(self, request, context)
             except ViewNotMatched:
                 continue
         else:

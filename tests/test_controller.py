@@ -40,7 +40,7 @@ def test_call(target_class):
 
     class Controller(target_class):
         @mio_decorator
-        def ritsu_view(self, request):
+        def ritsu_view(self, request, context):
             return request + ' ritsu'
 
     target = Controller()
@@ -51,7 +51,7 @@ def test_call(target_class):
 def test_call_not_found(target_class):
     from uiro.view import ViewNotMatched
 
-    def not_matched_wrapped(self, request):
+    def not_matched_wrapped(self, request, context):
         raise ViewNotMatched
 
     def view_callable(request):
