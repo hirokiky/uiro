@@ -24,7 +24,11 @@ def main(global_conf, root, **settings):
     apps = [import_module(app_name)
             for app_name in settings['uiro.installed_apps'].split('\n')
             if app_name != '']
-    matching = get_static_app_matching(apps) + matching
+
+    static_matching = get_static_app_matching(apps)
+    if static_matching:
+        matching = static_matching + matching
+
     setup_lookup(apps)
     initdb(settings)
     return make_wsgi_app(matching)
