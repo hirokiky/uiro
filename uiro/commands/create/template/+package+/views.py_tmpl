@@ -10,13 +10,13 @@ from .models import MyModel
 class TopController(BaseController):
     @view_config(method='get',
                  template_name='{{package}}:top.mako')
-    def get_view(self, request):
+    def get_view(self, request, context):
         mymodels = MyModel.query.all()
         return dict(request=request,
                     mymodels=mymodels)
 
     @view_config(method='post')
-    def post_view(self, request):
+    def post_view(self, request, context):
         with transaction.manager:
             Session.add(MyModel(name='spam'))
         return Response(status_code=302,
