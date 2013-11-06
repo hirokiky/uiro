@@ -8,33 +8,57 @@ Uiro framework documentation
 
 le Web framework.
 
-Uiro provides a foundation to create a pluggable Web application.
+A simple Uiro application will be like this.
 
-* For creating a database-driven web application.
-* Providing basict to create pluggable application.
-* Designed to make user enable to use a lot of great WSGI libraries.
-* Deciding necessary packages to avoid version collisions:
+.. code-block:: python
 
-  * webob==1.2.3
-  * gearbox==0.0.2
-  * matcha==0.3
-  * mako==0.9.0
-  * SQLAlchemy==0.8.2
+    from wsgiref.simple_server import make_server
+    from matcha import Matching, make_wsgi_app
+    from uiro.controller import BaseController
+    from uiro.view import view_config
 
-Let's create your first project on :doc:`intro` documentation.
 
-Contents:
+    class Controller(BaseController):
+        @view_config(method='get')
+        def get_view(self, request, context):
+            return 'Hello {name}!'.format(**request.matched_dict)
+
+     matching = Matching('/hello/{name}', Controller())
+
+    if __name__ == '__main__':
+        app = make_wsgi_app(matching)
+        server = make_server('0.0.0.0', 8888, app)
+        server.serve_forever()
+
+And setup.
+
+.. code-block:: sh
+
+    pip install uiro
+    python hello.py
+
+Now, you can visit http://localhost:8888/hello/world in a browser, you will see the text 'Hello world!'.
+
+Next step
+---------
+
+Above example is too tiny to create a common-sensible Web application.
+On next step, you can create your first project through :doc:`intro` documentation.
+In this doc, you can create an application package, not just for a example.
+
+To learn more about Uiro browse these topics:
 
 .. toctree::
    :maxdepth: 2
 
    intro
+   views
+   matching
+   db
+   templates
+   static
+   config
+   resources
+   commands
+   multipackages
    modules
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

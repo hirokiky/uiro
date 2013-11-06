@@ -1,5 +1,5 @@
-uiro
-====
+Uiro API reference
+==================
 
 package API reference.
 
