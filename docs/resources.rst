@@ -1,2 +1,0 @@
-Applying resources to views
-===========================

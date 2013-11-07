@@ -58,7 +58,6 @@ To learn more about Uiro browse these topics:
    templates
    static
    config
-   resources
    commands
    multipackages
    modules
