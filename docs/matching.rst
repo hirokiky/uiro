@@ -18,9 +18,9 @@ You can write dispatcher in `yourpacake/matching.py` like this:
 
 Then, client accessing:
 
-:/: DashboardController will be dispatched
-:/page/hello_word: PageController will be dispatched
-:/page/about_ritsu: also PageController will be dispatched
+:localhost/: DashboardController will be dispatched
+:localhost/page/hello_word: PageController will be dispatched
+:localhost/page/about_ritsu: also PageController will be dispatched
 
 Uiro is using matcha_ dispatcher.
 For more details about dispatching, watch matcha_ documentation.
