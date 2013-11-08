@@ -15,7 +15,7 @@ Uiro provides a foundation to create a pluggable Web application.
   * gearbox==0.0.2
   * matcha==0.3
   * mako==0.9.0
-  * SQLAlchemy==0.8.2
+  * SQLAlchemy==0.8.3
 
 To use these packages, Uiro (and it's third party app) users can
 be free by version collisions.
