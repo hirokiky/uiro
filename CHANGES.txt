@@ -1,8 +1,16 @@
 Changes
 =========
 
-0.1
----
+0.2 (2013-11-8)
+---------------
+
+* Feature handling Resources.
+* Entry point to apply predicates/wrappers by users to view_config
+* Fixed Controller to consider primaries of views
+* Changed depending SQLAlchemy version.
+
+0.1 (2013-10-29)
+----------------
 
 Initial release.
 
