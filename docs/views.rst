@@ -29,7 +29,7 @@ Views are logic about interfaces. Storing business logic in views is not recomme
 Testing views without decorators
 --------------------------------
 
-An Unit test should test target logic without any other things.
+On Unit testing, you should test target logic without any other things.
 View methods must be applied view_config decorator, so It seems that it is difficult to test views
 without any decorators.
 
@@ -66,7 +66,7 @@ For many cases, necessary data for one view can be determined by only a request.
 And It should be separate from views, to increase testability and readability:
 
 * Separating logic to collect data form views.
-* Allowing to dispatch views corresponds to collected data in context.
+* Allowing to dispatch views corresponding to collected data in context.
 
 It will be applied request object and you can write logic to collect data in it.
 It can be specified `resource` attribute in your Controller. A controller apply request
