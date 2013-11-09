@@ -16,7 +16,7 @@ class ControllerMetaClass(type):
         new_class = super_new(cls, name, bases, attrs)
 
         new_class.views = [value for name, value in attrs.items()
-                           if not name.startswith('_') and name.endswith('_view')]
+                           if not name.startswith('_') and hasattr(value, '_wrapped')]
         new_class.views.sort(key=lambda x: x._order)
         return new_class
 
@@ -24,7 +24,7 @@ class ControllerMetaClass(type):
 class BaseController(metaclass=ControllerMetaClass):
     """ Base WSGI application class to handle Views.
 
-    Controllers try to call methods containing '_view' suffix on it's name.
+    Controllers try to call methods wrapped by `uiro.view.view_config`.
     But actually it will call _wrapped attribute of each Views:
 
     * Original View methods can be called without any decorators.

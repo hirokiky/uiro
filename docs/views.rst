@@ -22,7 +22,6 @@ This MyController class is WSGI application returns response containing text 'He
 
 * Controller is a WSGI application.
 * view_config is decorator to construct methods as view.
-* All of views should be named with '_view' suffix.
 
 Views are logic about interfaces. Storing business logic in views is not recommended.
 

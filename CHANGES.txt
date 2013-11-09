@@ -1,6 +1,12 @@
 Changes
 =========
 
+0.3 (not available)
+-------------------
+
+* Now view methods does not need '_view' suffix on it's name.
+  Controller will collect views wrapped by `view_config` decorator.
+
 0.2 (2013-11-8)
 ---------------
 

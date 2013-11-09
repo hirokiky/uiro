@@ -9,25 +9,28 @@ def target_class():
 
 def test_init(target_class):
     class Controller(target_class):
-        def yui_view(self):
+        def yui(self):
             return 'yui'
-        yui_view._order = 1
+        yui._order = 1
+        yui._wrapped = 'dummy_wrapped_method'
 
-        def ritsu_view(self):
+        def ritsu(self):
             return 'ritsu'
-        ritsu_view._order = 0
+        ritsu._order = 0
+        ritsu._wrapped = 'dummy_wrapped_method'
 
         def get_mio(self):
             return 'mio'
 
-        def _mugi_view(self):
+        def _mugi(self):
             return 'mugi'
+        yui._wrapped = 'dummy_wrapped_mugi'
 
     actual = Controller()
 
     assert len(actual.views) == 2
-    assert actual.views[0].__name__ == 'ritsu_view'
-    assert actual.views[1].__name__ == 'yui_view'
+    assert actual.views[0].__name__ == 'ritsu'
+    assert actual.views[1].__name__ == 'yui'
 
 
 def test_call(target_class):
