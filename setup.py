@@ -40,7 +40,7 @@ setup(name='uiro',
       install_requires=[
           'webob==1.2.3',
           'gearbox==0.0.2',
-          'mako==0.9.0',
+          'mako==1.2.2',
           'matcha==0.3',
           'SQLAlchemy==0.8.3',
           'zope.sqlalchemy==0.7.3',
